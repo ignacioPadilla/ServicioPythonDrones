@@ -1,0 +1,6 @@
+# Dependencias esenciales - Instalar primero
+paho-mqtt
+pydantic>=2.5.0
+python-dotenv
+Pillow
+numpy

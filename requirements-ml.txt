@@ -1,0 +1,11 @@
+# Dependencias para Machine Learning (instalar después si hay conexión)
+# Descomentar según sea necesario
+
+# torch  # CPU: pip install torch
+# torchvision  # pip install torchvision
+# ultralytics  # pip install ultralytics
+# supervision  # pip install supervision
+# huggingface-hub  # pip install huggingface-hub
+# opencv-python  # pip install opencv-python
+# scipy  # pip install scipy
+# matplotlib  # pip install matplotlib

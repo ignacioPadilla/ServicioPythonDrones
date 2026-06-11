@@ -1,0 +1,187 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          SERVICIO MQTT - PRÓXIMOS PASOS                      ║
+║                    Servicio Python de Procesamiento de Imágenes              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+✅ COMPLETADO
+
+  [✓] Estructura de directorios creada
+  [✓] 12 módulos Python implementados
+  [✓] Configuración (config.json, .env)
+  [✓] Entorno virtual (venv/) creado
+  [✓] Dependencias esenciales instaladas
+      • paho-mqtt (cliente MQTT)
+      • pydantic (validación)
+      • python-dotenv (variables de entorno)
+      • Pillow (imágenes)
+      • numpy (cálculos)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏭️  PRÓXIMOS PASOS (Seguir en orden)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  INSTALAR DEPENDENCIAS DE MACHINE LEARNING
+
+    Ejecutar en PowerShell:
+    
+    cd "c:\Users\Ignacio\Desktop\Tesis\Pega\VC_Mqtt"
+    .\venv\Scripts\python install_ml_deps.py
+    
+    ⏱️  Tiempo estimado: 5-15 minutos (depende de conexión)
+    
+    Este script te permitirá elegir:
+    • CPU solo (funciona sin GPU)
+    • GPU NVIDIA CUDA 11.8 (RTX 30/40 series)
+    • GPU NVIDIA CUDA 12.1 (GPUs más nuevas)
+    • Solo torch como prueba
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣  AGREGAR IMAGEN DE REFERENCIA
+
+    Coloca una imagen (JPEG/PNG) en:
+    
+    config/reference_image.jpg
+    
+    Esta imagen se usa para que YOLOE aprenda qué detectar.
+    Puede ser:
+    • Una foto de una camioneta
+    • Una foto de un auto
+    • Una foto del objeto que quieres detectar
+    
+    ℹ️  Si no tienes imagen, el servicio aún funcionará pero solo 
+       procesa mensajes MQTT sin las características de prompt visual.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣  VERIFICAR INSTALACIÓN
+
+    Ejecutar:
+    
+    .\venv\Scripts\python -c "import torch; print(f'Torch: {torch.__version__}'); print(f'GPU: {torch.cuda.is_available()}')"
+    
+    Debe mostrar algo como:
+    ✅ Torch: 2.x.x
+    ✅ GPU: False (si CPU) o True (si GPU)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣  EJECUTAR EL SERVICIO
+
+    Ejecutar:
+    
+    .\venv\Scripts\python run.py
+    
+    Debe mostrar:
+    ============================================================
+    🚀 Iniciando Servicio MQTT de Procesamiento de Imágenes
+    ...
+    ============================================================
+    ✅ Servicio inicializado correctamente
+       Esperando mensajes MQTT...
+       Presiona Ctrl+C para detener
+    ============================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣  PROBAR CON MQTT (MQTTX o similar)
+
+    1. Abre MQTTX
+    2. Conecta al broker:
+       • Broker: mqtt.mediamtx.gcp.mindlabs.cl
+       • Puerto: 1883
+       • Usuario: test
+       • Contraseña: Javj4UXtlsq2gE
+    
+    3. Suscribete a: test/ignacio/sensor1
+    
+    4. Publica un mensaje JSON con imagen base64 (ver README.md)
+    
+    5. El servicio procesa y reenvía el mensaje modificado
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTACIÓN IMPORTANTE
+
+    • README.md           - Guía completa del proyecto
+    • INSTALLATION.md     - Detalles de instalación
+    • config/config.json  - Configuración principal
+    • .env.example        - Template de variables de entorno
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ OPCIÓN RÁPIDA (sin GPU, sin ML deps)
+
+    Si no tienes conexión o no necesitas GPU aún:
+    
+    .\venv\Scripts\python run.py
+    
+    ⚠️  El servicio se iniciará pero fallará al intentar cargar modelos.
+        Primero debes completar el paso 1️⃣
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆘 PROBLEMAS FRECUENTES
+
+  ❌ "No module named 'torch'"
+     → Ejecuta: .\venv\Scripts\python install_ml_deps.py
+     
+  ❌ "Could not connect to PyPI"
+     → Revisa conexión a internet o usa GPU/CPU específico
+     
+  ❌ "GPU no detectada"
+     → Instala CPU: .\venv\Scripts\pip install torch --index-url https://download.pytorch.org/whl/cpu
+     
+  ❌ "MQTT connection failed"
+     → Verifica broker y credenciales en config/config.json
+     
+  ❌ "Module not found: reference_image.jpg"
+     → Coloca imagen en config/reference_image.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 ARQUITECTURA DEL SERVICIO
+
+    MQTT Broker
+         ↓
+    mqtt_service.py (escucha)
+         ↓
+    message_processor.py (valida + procesa)
+         ↓
+    image_processor.py (YOLOE inferencia)
+         ↓
+    iou_calculator.py (compara detecciones)
+         ↓
+    message_processor.py (modifica si IoU > threshold)
+         ↓
+    mqtt_service.py (publica)
+         ↓
+    MQTT Broker (reenvía)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 OBJETIVO
+
+    Transformar el notebook Jupyter en un servicio Python modular que:
+    
+    ✅ Escuche mensajes MQTT con imágenes en base64
+    ✅ Procese imágenes con modelo YOLOE
+    ✅ Compare detecciones usando IoU
+    ✅ Modifique class_name si IoU > 0.5
+    ✅ Reenvíe mensajes modificados por MQTT
+    ✅ Guarde resultados en ./output/ con timestamp
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¿LISTO? Sigue estos pasos en orden:
+
+  1. .\venv\Scripts\python install_ml_deps.py
+  2. Coloca imagen en config/reference_image.jpg
+  3. .\venv\Scripts\python run.py
+  4. Prueba con MQTTX
+
+¡Buena suerte! 🚀
+
+╚══════════════════════════════════════════════════════════════════════════════╝

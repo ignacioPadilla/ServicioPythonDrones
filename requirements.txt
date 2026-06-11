@@ -1,0 +1,17 @@
+paho-mqtt
+pydantic
+python-dotenv
+torch
+torchvision
+ultralytics
+supervision
+huggingface-hub
+Pillow
+numpy
+opencv-python
+scipy
+matplotlib
+git+https://github.com/THU-MIG/yoloe.git#subdirectory=third_party/CLIP
+git+https://github.com/THU-MIG/yoloe.git#subdirectory=third_party/ml-mobileclip
+git+https://github.com/THU-MIG/yoloe.git#subdirectory=third_party/lvis-api
+git+https://github.com/THU-MIG/yoloe.git

@@ -1,0 +1,31 @@
+{
+  "mqtt": {
+    "broker": "mqtt.mediamtx.gcp.mindlabs.cl",
+    "port": 1883,
+    "username": "test",
+    "password": "Javj4UXtlsq2gE",
+    "topic_subscribe": "test/ignacio/sensor1",
+    "topic_publish": "test/ignacio/sensor1"
+  },
+  "models": {
+    "yoloe_model": "yoloe-v8l-seg.pt",
+    "model_dir": "./models",
+    "auto_download": true,
+    "reference_image": "./config/reference_image.jpg",
+    "reference_bbox": [0, 0, 0, 0]
+  },
+  "processing": {
+    "iou_threshold": 0.5,
+    "device": "auto",
+    "class_name_on_match": "Camioneta"
+  },
+  "output": {
+    "save_processed": true,
+    "output_dir": "./output",
+    "filename_pattern": "{timestamp}_deteccion_procesada.json"
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}
