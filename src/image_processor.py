@@ -48,8 +48,15 @@ class ImageProcessor:
             ref_image = Image.open(reference_image_path)
             logger.info(f"   ✅ Imagen de referencia cargada: {ref_image.size}")
             
-            #Falta la caja
+            #Bounding box de referencia
             box=config.get("models", "reference_bbox")
+            logger.info(f"✅ Bounding box de referencia cargada: {box}")
+
+            # Construir prompt visual con bbox y clase
+            bboxes = np.array([[box[0], box[1], box[2], box[3]]], dtype=np.float64)
+            cls = np.array([0], dtype=np.int32)
+            prompts = dict(bboxes=bboxes, cls=cls)
+            logger.info(f"✅ Prompt visual construido")
 
             #FaltaPromptVIsual
             model.predict(ref_image, prompts=prompts, predictor=YOLOEVPSegPredictor, return_vpe=True)
