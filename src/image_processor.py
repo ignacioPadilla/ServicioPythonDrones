@@ -30,8 +30,8 @@ class ImageProcessor:
     
     def setup(self) -> None:
         """
-        Configuración inicial del modelo con imagen de referencia
-        Debe llamarse una sola vez al iniciar el servicio
+        Configura el modelo YOLOE con la imagen de referencia usando Visual Prompt.
+        Debe llamarse UNA sola vez al iniciar el servicio.
         """
         try:
             if self._model_configured:
@@ -40,34 +40,61 @@ class ImageProcessor:
             
             config = get_config()
             reference_image_path = config.get("models", "reference_image")
-            
-            logger.info("🔧 Configurando modelo YOLOE con imagen de referencia...")
-            logger.info(f"   Cargando imagen de referencia: {reference_image_path}")
+            reference_bbox = config.get("models", "reference_bbox") #[x1, y1, x2, y2]
+            class_name = config.get("processing","class_name_on_match") #ej: "Camioneta"
+
+            logger.info("Configurando modelo YOLOE con imagen de referencia...")
+            logger.info(f"  Imagen de referencia: {reference_image_path}")
+            logger.info(f" BBox de referencia: {reference_bbox}")
+            logger.info(f" Clase objetivo: {class_name}")
             
             # Cargar imagen de referencia
             ref_image = Image.open(reference_image_path)
             logger.info(f"   ✅ Imagen de referencia cargada: {ref_image.size}")
-            
-            #Bounding box de referencia
-            box=config.get("models", "reference_bbox")
-            logger.info(f"✅ Bounding box de referencia cargada: {box}")
 
-            # Construir prompt visual con bbox y clase
-            bboxes = np.array([[box[0], box[1], box[2], box[3]]], dtype=np.float64)
+            #Obtener el modelo ya cargado desde ModelLoader
+            model_loader = get_model_loader()
+            model = model_loader.load_model()
+            logger.info("   ✅ Modelo YOLOE cargado desde ModelLoader")
+
+
+            #Construir prompt visual con bbox y clase
+            NAMES = [class_name]  
+            bboxes = np.array([reference_bbox], dtype=np.float64)
             cls = np.array([0], dtype=np.int32)
             prompts = dict(bboxes=bboxes, cls=cls)
-            logger.info(f"✅ Prompt visual construido")
+            logger.info(f"   ✅ Prompt visual construido ")
 
-            #FaltaPromptVIsual
-            model.predict(ref_image, prompts=prompts, predictor=YOLOEVPSegPredictor, return_vpe=True)
+            #Paso 1: Inferencia en imagen de referencia. Extraer el VPE
+            logger.info(" Extrayendo Visual Prompt Embedding (VPE)...")
+            model.predict(
+                ref_image,
+                prompts=prompts,
+                predictor=YOLOEVPSegPredictor(),
+                return_vpe=True,
 
-            # Aquí iría la configuración específica del modelo si es necesaria
-            # Por ahora, solo marcamos como configurado
+            )
+            logger.info("   ✅ VPE extraído y modelo configurado con imagen de referencia") 
+
+            #Paso 2: configurar el modelo con las con las clase y el embedding extraído
+            model.set_classes(NAMES,model.predictor.vpe)
+            model.predictor= None #Liberar predictor para que se cree uno nuevo en cada inferencia con el VPE ya configurado
+
             self._model_configured = True
-            logger.info("✅ Modelo configurado correctamente")
-        
+            logger.info("✅ Modelo YOLOE configurado correctamente con Visual Prompt")
+
         except Exception as e:
-            raise ImageProcessingError(f"Error configurando modelo: {e}")
+            raise ImageProcessingError(f"Error configurando modelo YOLOE: {e}")
+
+
+
+            
+
+
+
+
+
+
     
     def decode_base64_image(self, base64_str: str) -> Image.Image:
         """
