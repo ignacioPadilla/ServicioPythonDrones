@@ -2,7 +2,7 @@
 Cálculo de IoU (Intersection over Union) entre bounding boxes
 """
 import torch
-from torch.ops.vision import roi_align
+#from torch.ops.vision import roi_align
 from torchvision.ops import box_iou
 from .logger_config import get_logger
 from .exceptions import ImageProcessingError
