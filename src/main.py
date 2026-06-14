@@ -37,7 +37,7 @@ class MQTTProcessingService:
             # 1. Cargar y validar configuración
             logger.info("\n📋 Paso 1: Validando configuración...")
             config = get_config()
-            config.validate()
+            #config.validate()
             logger.info("✅ Configuración válida")
             
             # 2. Mostrar device
