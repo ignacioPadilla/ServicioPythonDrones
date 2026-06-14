@@ -70,7 +70,7 @@ class ImageProcessor:
             model.predict(
                 ref_image,
                 prompts=prompts,
-                predictor=YOLOEVPSegPredictor(),
+                predictor=YOLOEVPSegPredictor,
                 return_vpe=True,
 
             )
