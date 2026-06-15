@@ -60,8 +60,12 @@ class ImageProcessor:
 
             #Construir prompt visual con bbox y clase
             NAMES = [class_name]  
-            bboxes = np.array([reference_bbox], dtype=np.float64)
-            cls = np.array([0], dtype=np.int32)
+            if isinstance(reference_bbox[0], list):
+                bboxes = np.array(reference_bbox, dtype=np.float64)
+                cls = np.array([0] * len(reference_bbox), dtype=np.int32)
+            else:
+                bboxes = np.array([reference_bbox], dtype=np.float64)
+                cls = np.array([0], dtype=np.int32)
             prompts = dict(bboxes=bboxes, cls=cls)
             logger.info(f"   ✅ Prompt visual construido ")
 

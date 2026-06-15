@@ -12,7 +12,10 @@
     "model_dir": "./models",
     "auto_download": true,
     "reference_image": "./config/reference_image.jpg",
-    "reference_bbox": [0, 0, 0, 0]
+    "reference_bbox": [
+      [438, 227, 570, 337],
+      [475, 440, 607, 548]
+    ]
   },
   "processing": {
     "iou_threshold": 0.5,
