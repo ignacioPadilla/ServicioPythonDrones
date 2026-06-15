@@ -28,7 +28,7 @@ class ModelsConfig(BaseModel):
     reference_image: str = "reference.jpg"
     yoloe_model: str = "yoloe-v8l-seg.pt"
     conf_threshold: float = 0.25
-    reference_bbox: list[int] = Field(default=[0, 0, 0, 0])
+    reference_bbox: list = Field(default=[[0, 0, 0, 0]])
 
 
 class ProcessingConfig(BaseModel):
