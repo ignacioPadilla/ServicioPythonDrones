@@ -5,7 +5,7 @@
     "username": "test",
     "password": "Javj4UXtlsq2gE",
     "topic_subscribe": "test/ignacio/sensor1",
-    "topic_publish": "test/ignacio/sensor1"
+    "topic_publish": "test/ignacio/resultado1"
   },
   "models": {
     "yoloe_model": "yoloe-v8l-seg.pt",
@@ -13,9 +13,9 @@
     "auto_download": true,
     "reference_image": "./config/reference_image.jpg",
     "reference_bbox": [
-      [438, 227, 570, 337],
-      [475, 440, 607, 548]
-    ]
+    [438, 227, 570, 337],
+    [475, 440, 607, 548]
+      ]
   },
   "processing": {
     "iou_threshold": 0.5,
